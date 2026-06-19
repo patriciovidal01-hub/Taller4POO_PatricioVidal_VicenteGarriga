@@ -10,6 +10,7 @@ public class Main {
 		
 		sistem.crearCarta();
 		sistem.probandoProbando();
+		Ventana.crearVentana();
 		
 	}
 }
