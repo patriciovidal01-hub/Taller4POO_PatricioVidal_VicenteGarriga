@@ -1,6 +1,9 @@
 package Strategy;
 
+import java.util.List;
+import Dominio.*;
+
 public interface Strategy {
 
-	void ordenar();
+	List<Carta> ordenar(List<Carta> cartas);
 }

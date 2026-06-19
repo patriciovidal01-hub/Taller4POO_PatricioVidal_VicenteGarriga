@@ -1,7 +1,9 @@
 package Dominio;
 
+import Visitor.Visitor;
+
 public class Item extends Carta {
-	
+
 	int bonificacion;
 
 	public Item(String nombre, int rareza, int bonificacion) {
@@ -9,11 +11,17 @@ public class Item extends Carta {
 		this.bonificacion = bonificacion;
 	}
 
-	@Override
 	public String toString() {
 		return "Item [bonificacion=" + bonificacion + "]";
 	}
-	
-	
-	
+
+	public int getBonificacion() {
+		return bonificacion;
+	}
+
+	public int accept(Visitor v) {
+		return v.visit(this);
+		
+	}
+
 }

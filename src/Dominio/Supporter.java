@@ -1,5 +1,7 @@
 package Dominio;
 
+import Visitor.Visitor;
+
 public class Supporter extends Carta {
 	
 	int efectoTurno;
@@ -9,9 +11,17 @@ public class Supporter extends Carta {
 		this.efectoTurno = efectoTurno;
 	}
 
-	@Override
 	public String toString() {
 		return "Supporter [efectoTurno=" + efectoTurno + "]";
+	}
+
+	public int getEfectoTurno() {
+		return efectoTurno;
+	}
+
+
+	public int accept(Visitor v) {
+		return v.visit(this);
 	}
 	
 	
