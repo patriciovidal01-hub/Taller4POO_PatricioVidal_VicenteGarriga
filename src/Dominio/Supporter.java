@@ -8,6 +8,11 @@ public class Supporter extends Carta {
 		super(nombre, rareza);
 		this.efectoTurno = efectoTurno;
 	}
+
+	@Override
+	public String toString() {
+		return "Supporter [efectoTurno=" + efectoTurno + "]";
+	}
 	
 	
 }

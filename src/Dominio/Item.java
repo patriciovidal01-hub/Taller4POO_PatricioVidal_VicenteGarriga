@@ -8,6 +8,11 @@ public class Item extends Carta {
 		super(nombre, rareza);
 		this.bonificacion = bonificacion;
 	}
+
+	@Override
+	public String toString() {
+		return "Item [bonificacion=" + bonificacion + "]";
+	}
 	
 	
 	

@@ -7,5 +7,12 @@ public class Energy extends Carta {
 		super(nombre, rareza);
 		this.elemento = elemento;
 	}
+
+	@Override
+	public String toString() {
+		return "Energy [elemento=" + elemento + "]";
+	}
+	
+	
 	
 }
