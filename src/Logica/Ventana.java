@@ -2,17 +2,22 @@ package Logica;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import Dominio.Carta;
 
 public class Ventana {
 
-	public static void crearVentana() {
+	public void crearVentana() {
 		JFrame ventana = new JFrame("TCG POKEMON O ALGO ASI");
 		JTabbedPane pestañas = new JTabbedPane();
 
@@ -35,10 +40,26 @@ public class Ventana {
 
 		ordenar.add(orden, BorderLayout.SOUTH);
 
-		JTextArea texto = new JTextArea(5, 20);
-		texto.setEditable(false);
+		// Tabla con información
 
-		ordenar.add(texto, BorderLayout.CENTER);
+		List<Carta> cartas = SistemaImp.getInstance().getCartas();
+
+		String[] datos1 = { "Nombre", "Rareza" };
+
+		DefaultTableModel tabla = new DefaultTableModel(datos1, 0);
+		JTable tablaDatos = new JTable(tabla);
+
+		escucharOpcion(orden, tabla);
+
+		for (int i = 0; i < cartas.size(); i++) {
+			Carta c = cartas.get(i);
+			Object[] caracteristicas = { c.getNombre(), c.getRareza() };
+			tabla.addRow(caracteristicas);
+		}
+
+		tablaDatos.setDefaultEditor(Object.class, null);
+		JScrollPane scroll = new JScrollPane(tablaDatos);
+		ordenar.add(scroll, BorderLayout.CENTER);
 
 		// Pestañas
 
@@ -52,6 +73,47 @@ public class Ventana {
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setVisible(true);
 
+	}
+
+	public void escucharOpcion(JComboBox<String> opcion, DefaultTableModel tabla) {
+		List<Carta> cartas = SistemaImp.getInstance().getCartas();
+
+		opcion.addActionListener(e -> {
+
+			switch (opcion.getSelectedIndex()) {
+
+			case (0):
+				tabla.setRowCount(0);
+				List<Carta> cartas2 = SistemaImp.getInstance().Strategy1(cartas);
+				for (int i = 0; i < cartas2.size(); i++) {
+					Carta c = cartas2.get(i);
+					Object[] caracteristicas = { c.getNombre(), c.getRareza() };
+					tabla.addRow(caracteristicas);
+				}
+				break;
+
+			case (1):
+				tabla.setRowCount(0);
+				List<Carta> cartas3 = SistemaImp.getInstance().Strategy2(cartas);
+				for (int i = 0; i < cartas3.size(); i++) {
+					Carta c = cartas3.get(i);
+					Object[] caracteristicas = { c.getNombre(), c.getRareza() };
+					tabla.addRow(caracteristicas);
+				}
+				break;
+
+			case (2):
+				tabla.setRowCount(0);
+				List<Carta> cartas4 = SistemaImp.getInstance().Strategy3(cartas);
+				for (int i = 0; i < cartas4.size(); i++) {
+					Carta c = cartas4.get(i);
+					Object[] caracteristicas = { c.getNombre(), c.getRareza() };
+					tabla.addRow(caracteristicas);
+				}
+				break;
+			}
+
+		});
 	}
 
 	public void eventoAgregar(JButton b) {
@@ -71,4 +133,5 @@ public class Ventana {
 
 		});
 	}
+
 }

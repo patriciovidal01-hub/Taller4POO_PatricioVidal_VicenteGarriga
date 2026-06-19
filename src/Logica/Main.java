@@ -6,12 +6,13 @@ package Logica;
 public class Main {
 
 	static Sistema sistem = SistemaImp.getInstance();
-
+	static Ventana ventana = new Ventana();
+	
 	public static void main(String[] args) {
 
 		sistem.crearCarta();
 		sistem.probandoProbando();
-		Ventana.crearVentana();
+		ventana.crearVentana();
 
 	}
 }

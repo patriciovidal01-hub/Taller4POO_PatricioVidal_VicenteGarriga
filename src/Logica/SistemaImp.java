@@ -5,6 +5,10 @@ import java.util.List;
 
 import Dominio.Carta;
 import Factory.CartaFactory;
+import Strategy.Contexto;
+import Strategy.NombreStrategy;
+import Strategy.PoderStrategy;
+import Strategy.RarezaStrategy;
 
 public class SistemaImp implements Sistema{
 
@@ -13,7 +17,7 @@ public class SistemaImp implements Sistema{
 	private SistemaImp() {}
 	
 	List<Carta> cartas = new ArrayList<Carta>();
-	
+	Contexto context = new Contexto();
 	
 	public static SistemaImp getInstance() {
 		if (instance == null) {
@@ -40,5 +44,29 @@ public class SistemaImp implements Sistema{
 		}
 		
 	}
+	
+	public List<Carta> getCartas() {
+		List<Carta> copia = new ArrayList<>(cartas);
+		return copia;
+	}
+	
+	public List<Carta> Strategy3(List<Carta> cartas){
+		context.setStrategy(new PoderStrategy());
+		context.ordenar(cartas);
+		return cartas;
+	}
+	
+	public List<Carta> Strategy2(List<Carta> cartas){
+		context.setStrategy(new NombreStrategy());
+		context.ordenar(cartas);
+		return cartas;
+	}
+	
+	public List<Carta> Strategy1(List<Carta> cartas){
+		context.setStrategy(new RarezaStrategy());
+		context.ordenar(cartas);
+		return cartas;
+	}
+	
 	
 }
