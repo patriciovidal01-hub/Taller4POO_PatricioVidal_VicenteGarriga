@@ -14,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Dominio.Carta;
+import Visitor.PoderVisitor;
 
 public class Ventana {
 
@@ -44,16 +45,19 @@ public class Ventana {
 
 		List<Carta> cartas = SistemaImp.getInstance().getCartas();
 
-		String[] datos1 = { "Nombre", "Rareza" };
+		String[] datos1 = { "Nombre", "Rareza", "Poder" };
 
 		DefaultTableModel tabla = new DefaultTableModel(datos1, 0);
 		JTable tablaDatos = new JTable(tabla);
 
 		escucharOpcion(orden, tabla);
-
+		
+		PoderVisitor v = new PoderVisitor();
+		
 		for (int i = 0; i < cartas.size(); i++) {
 			Carta c = cartas.get(i);
-			Object[] caracteristicas = { c.getNombre(), c.getRareza() };
+			int poder = c.accept(v);
+			Object[] caracteristicas = { c.getNombre(), c.getRareza(), poder};
 			tabla.addRow(caracteristicas);
 		}
 
@@ -77,7 +81,8 @@ public class Ventana {
 
 	public void escucharOpcion(JComboBox<String> opcion, DefaultTableModel tabla) {
 		List<Carta> cartas = SistemaImp.getInstance().getCartas();
-
+		PoderVisitor v = new PoderVisitor();
+		
 		opcion.addActionListener(e -> {
 
 			switch (opcion.getSelectedIndex()) {
@@ -87,7 +92,8 @@ public class Ventana {
 				List<Carta> cartas2 = SistemaImp.getInstance().Strategy1(cartas);
 				for (int i = 0; i < cartas2.size(); i++) {
 					Carta c = cartas2.get(i);
-					Object[] caracteristicas = { c.getNombre(), c.getRareza() };
+					int poder = c.accept(v);
+					Object[] caracteristicas = { c.getNombre(), c.getRareza(), poder };
 					tabla.addRow(caracteristicas);
 				}
 				break;
@@ -97,7 +103,8 @@ public class Ventana {
 				List<Carta> cartas3 = SistemaImp.getInstance().Strategy2(cartas);
 				for (int i = 0; i < cartas3.size(); i++) {
 					Carta c = cartas3.get(i);
-					Object[] caracteristicas = { c.getNombre(), c.getRareza() };
+					int poder = c.accept(v);
+					Object[] caracteristicas = { c.getNombre(), c.getRareza(), poder };
 					tabla.addRow(caracteristicas);
 				}
 				break;
@@ -107,7 +114,8 @@ public class Ventana {
 				List<Carta> cartas4 = SistemaImp.getInstance().Strategy3(cartas);
 				for (int i = 0; i < cartas4.size(); i++) {
 					Carta c = cartas4.get(i);
-					Object[] caracteristicas = { c.getNombre(), c.getRareza() };
+					int poder = c.accept(v);
+					Object[] caracteristicas = { c.getNombre(), c.getRareza(), poder };
 					tabla.addRow(caracteristicas);
 				}
 				break;
