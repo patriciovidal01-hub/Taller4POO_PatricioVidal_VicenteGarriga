@@ -8,7 +8,7 @@ public interface Sistema {
 
 	void crearCarta();
 	void probandoProbando();
-	List<Carta> Strategy1(List<Carta> cartas);
-	List<Carta> Strategy2(List<Carta> cartas);
-	List<Carta> Strategy3(List<Carta> cartas);
+	List<Carta> StrategyRareza(List<Carta> cartas);
+	List<Carta> StrategyNombre(List<Carta> cartas);
+	List<Carta> StrategyPoder(List<Carta> cartas);
 }	

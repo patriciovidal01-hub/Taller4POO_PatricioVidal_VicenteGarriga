@@ -50,19 +50,19 @@ public class SistemaImp implements Sistema{
 		return copia;
 	}
 	
-	public List<Carta> Strategy3(List<Carta> cartas){
+	public List<Carta> StrategyPoder(List<Carta> cartas){
 		context.setStrategy(new PoderStrategy());
 		context.ordenar(cartas);
 		return cartas;
 	}
 	
-	public List<Carta> Strategy2(List<Carta> cartas){
+	public List<Carta> StrategyNombre(List<Carta> cartas){
 		context.setStrategy(new NombreStrategy());
 		context.ordenar(cartas);
 		return cartas;
 	}
 	
-	public List<Carta> Strategy1(List<Carta> cartas){
+	public List<Carta> StrategyRareza(List<Carta> cartas){
 		context.setStrategy(new RarezaStrategy());
 		context.ordenar(cartas);
 		return cartas;

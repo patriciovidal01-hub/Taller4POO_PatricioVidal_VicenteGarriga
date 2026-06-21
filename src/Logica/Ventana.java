@@ -4,13 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Dominio.Carta;
@@ -32,6 +36,8 @@ public class Ventana {
 		admin.add(agregar);
 		admin.add(eliminar);
 		admin.add(modificar);
+		
+		eventoAgregar(agregar, ventana);
 
 		// Ordenar pestaña
 
@@ -48,10 +54,7 @@ public class Ventana {
 		String[] datos1 = { "Nombre", "Rareza", "Poder" };
 
 		DefaultTableModel tabla = new DefaultTableModel(datos1, 0);
-		JTable tablaDatos = new JTable(tabla);
-
-		escucharOpcion(orden, tabla);
-		
+		JTable tablaDatos = new JTable(tabla);		
 		PoderVisitor v = new PoderVisitor();
 		
 		for (int i = 0; i < cartas.size(); i++) {
@@ -60,10 +63,17 @@ public class Ventana {
 			Object[] caracteristicas = { c.getNombre(), c.getRareza(), poder};
 			tabla.addRow(caracteristicas);
 		}
-
+		
 		tablaDatos.setDefaultEditor(Object.class, null);
 		JScrollPane scroll = new JScrollPane(tablaDatos);
+		Escuchador s = new Escuchador(tablaDatos, cartas, ventana);
+		tablaDatos.addMouseListener(s);
+		
+		escucharOpcion(orden, tabla, s);
+		
 		ordenar.add(scroll, BorderLayout.CENTER);
+		
+		
 
 		// Pestañas
 
@@ -79,7 +89,7 @@ public class Ventana {
 
 	}
 
-	public void escucharOpcion(JComboBox<String> opcion, DefaultTableModel tabla) {
+	public void escucharOpcion(JComboBox<String> opcion, DefaultTableModel tabla, Escuchador s) {
 		List<Carta> cartas = SistemaImp.getInstance().getCartas();
 		PoderVisitor v = new PoderVisitor();
 		
@@ -89,44 +99,106 @@ public class Ventana {
 
 			case (0):
 				tabla.setRowCount(0);
-				List<Carta> cartas2 = SistemaImp.getInstance().Strategy1(cartas);
+				List<Carta> cartas2 = SistemaImp.getInstance().StrategyRareza(cartas);
 				for (int i = 0; i < cartas2.size(); i++) {
 					Carta c = cartas2.get(i);
 					int poder = c.accept(v);
 					Object[] caracteristicas = { c.getNombre(), c.getRareza(), poder };
 					tabla.addRow(caracteristicas);
 				}
+				s.setCartas(cartas2);
 				break;
 
 			case (1):
 				tabla.setRowCount(0);
-				List<Carta> cartas3 = SistemaImp.getInstance().Strategy2(cartas);
+				List<Carta> cartas3 = SistemaImp.getInstance().StrategyNombre(cartas);
 				for (int i = 0; i < cartas3.size(); i++) {
 					Carta c = cartas3.get(i);
 					int poder = c.accept(v);
 					Object[] caracteristicas = { c.getNombre(), c.getRareza(), poder };
 					tabla.addRow(caracteristicas);
 				}
+				s.setCartas(cartas3);
 				break;
 
 			case (2):
 				tabla.setRowCount(0);
-				List<Carta> cartas4 = SistemaImp.getInstance().Strategy3(cartas);
+				List<Carta> cartas4 = SistemaImp.getInstance().StrategyPoder(cartas);
 				for (int i = 0; i < cartas4.size(); i++) {
 					Carta c = cartas4.get(i);
 					int poder = c.accept(v);
 					Object[] caracteristicas = { c.getNombre(), c.getRareza(), poder };
 					tabla.addRow(caracteristicas);
 				}
+				s.setCartas(cartas4);
 				break;
 			}
 
 		});
 	}
 
-	public void eventoAgregar(JButton b) {
+	public void eventoAgregar(JButton b, JFrame ventana) {
 		b.addActionListener(e -> {
+			JDialog ventana2 = new JDialog(ventana, "Agregar Carta", true);
+			JPanel panel = new JPanel();
+			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+			
+			JLabel pregunta = new JLabel("¿De que tipo quieres que sea tú carta?");
+			String[] opcions = {"Pokemon", "Item", "Supporter", "Energy"}; 
+			JComboBox<String> opciones = new JComboBox<>(opcions);
+			opciones.setMaximumSize(opciones.getPreferredSize());
+			
+			JPanel determinados = new JPanel();
+			determinados.setLayout(new BoxLayout(determinados, BoxLayout.Y_AXIS));
+			
+			JLabel nombre = new JLabel("Nombre");
+			JTextField nombre2 = new JTextField(15);
+		
+			
+			JLabel rareza = new JLabel("Rareza");
+			JTextField rareza2 = new JTextField(15);
 
+			JButton aceptar = new JButton("Aceptar");
+			determinados.add(nombre);
+			determinados.add(nombre2);
+			determinados.add(rareza);
+			determinados.add(rareza2);
+			
+			opciones.addActionListener(e1 -> {
+				
+				switch(opciones.getSelectedIndex()) {
+					
+				case(0):	
+					System.out.println("Pepardo");
+					break;
+					
+				case(1):
+					System.out.println("Pepe");
+					break;
+				
+				case(2):
+					System.out.println("Pepepe");
+					break;
+					
+				case(3):
+					break;
+				}
+				
+			});
+			
+			panel.add(pregunta);
+			panel.add(opciones);
+			panel.add(determinados);
+			panel.add(aceptar);
+			
+			
+			
+			
+			ventana2.add(panel);
+			ventana2.setSize(600, 500);
+			ventana2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			ventana2.setLocationRelativeTo(ventana);
+			ventana2.setVisible(true);
 		});
 	}
 
