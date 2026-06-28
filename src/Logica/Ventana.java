@@ -70,7 +70,7 @@ public class Ventana {
 
 		escucharOpcion(orden, tabla, s);
 		eventoAgregar(agregar, ventana, tabla, s);
-		
+		eventoEliminar(eliminar, ventana, tabla, s);
 		
 		ordenar.add(scroll, BorderLayout.CENTER);
 
@@ -329,9 +329,55 @@ public class Ventana {
 		s.setCartas(cartas2);
 	}
 	
-	public void eventoEliminar(JButton b) {
+	public void eventoEliminar(JButton b, JFrame ventana, DefaultTableModel tabla, Escuchador s) {
+		
+		PoderVisitor v = new PoderVisitor();
+		
 		b.addActionListener(e -> {
+			List<Carta> cartas = SistemaImp.getInstance().getCartas();
+			
+			String[] datos1 = { "Nombre", "Rareza", "Poder" };
+			DefaultTableModel tabla2 = new DefaultTableModel(datos1, 0);
+			
+			JDialog ventana2 = new JDialog(ventana, "Eliminar Carta", true);
+			JPanel panel = new JPanel(new FlowLayout());
+			JTable tablaDatos = new JTable(tabla2);
+			
+			for (int i = 0; i < cartas.size(); i++) {
+				Carta c = cartas.get(i);
+				int poder = c.accept(v);
+				Object[] caracteristicas = { c.getNombre(), c.getRareza(), poder };
+				tabla2.addRow(caracteristicas);
+			}
 
+			tablaDatos.setDefaultEditor(Object.class, null);
+			JScrollPane scroll = new JScrollPane(tablaDatos);
+			
+			JButton eliminar = new JButton("Eliminar Carta");
+			JLabel texto = new JLabel("Clickeé sobre la carta que quiera eliminar y pulse |Eliminar Carta|");
+			
+			
+			
+			eliminar.addActionListener(e2-> {
+				int fila = tablaDatos.getSelectedRow();
+				if(fila >= 0) {
+					Carta carta = cartas.get(fila);
+					SistemaImp.getInstance().eliminarCarta(carta);
+					reiniciarTabla(tabla, s);
+					ventana2.dispose();
+				}
+			});
+			
+			
+			panel.add(scroll);
+			panel.add(eliminar);
+			panel.add(texto);
+			ventana2.add(panel);
+			ventana2.setSize(600, 500);
+			ventana2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			ventana2.setLocationRelativeTo(ventana);
+			ventana2.setVisible(true);
+			
 		});
 	}
 

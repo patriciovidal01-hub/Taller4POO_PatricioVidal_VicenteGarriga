@@ -41,6 +41,10 @@ public class SistemaImp implements Sistema{
 		cartas.add(carta);
 	}
 	
+	public void eliminarCarta(Carta c) {
+		cartas.remove(c);
+	}
+	
 	
 	public List<Carta> getCartas() {
 		List<Carta> copia = new ArrayList<>(cartas);
