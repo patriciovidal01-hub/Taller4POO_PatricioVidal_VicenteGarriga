@@ -26,7 +26,7 @@ public class SistemaImp implements Sistema{
 		return instance;
 	}
 	
-	public void crearCarta() {
+	public void leerArchivo() {
 		List<String[]> datos = LectorArchivo.leerArch("Sobres.txt");
 		
 		for(String[] d : datos) {
@@ -36,14 +36,11 @@ public class SistemaImp implements Sistema{
 		
 	}
 	
-	
-	public void probandoProbando() {
-		
-		for(Carta c : cartas) {
-			System.out.println(c);
-		}
-		
+	public void crearCarta(String[] d) {
+		Carta carta = CartaFactory.crearCarta(d);
+		cartas.add(carta);
 	}
+	
 	
 	public List<Carta> getCartas() {
 		List<Carta> copia = new ArrayList<>(cartas);

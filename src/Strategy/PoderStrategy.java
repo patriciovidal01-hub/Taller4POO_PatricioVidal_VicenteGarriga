@@ -8,6 +8,8 @@ import Visitor.PoderVisitor;
 
 public class PoderStrategy implements Strategy, Comparator<Carta> {
 	
+	PoderVisitor v = new PoderVisitor();
+	
 	public List<Carta> ordenar(List<Carta> cartas) {
 
 		cartas.sort(this);
@@ -17,11 +19,12 @@ public class PoderStrategy implements Strategy, Comparator<Carta> {
 
 	public int compare(Carta o1, Carta o2) {
 		
-		PoderVisitor v = new PoderVisitor();
+		int poder1 = o1.accept(v);
+		int poder2 = o2.accept(v);
 		
-		if (o1.accept(v) < o2.accept(v)) {
+		if (poder1 < poder2) {
 			return 1;
-		} else if (o1.accept(v) < o2.accept(v)) {
+		} else if (poder1 == poder2) {
 			return 0;
 		} else
 			return -1;

@@ -11,10 +11,6 @@ public abstract class Carta implements Visitable {
 		this.rareza = rareza;
 	}
 
-	public String toString() {
-		return "Carta [nombre=" + nombre + ", rareza=" + rareza + "]";
-	}
-
 	public String getNombre() {
 		return nombre;
 	}

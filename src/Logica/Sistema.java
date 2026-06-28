@@ -6,8 +6,8 @@ import Dominio.Carta;
 
 public interface Sistema {
 
-	void crearCarta();
-	void probandoProbando();
+	void leerArchivo();
+	void crearCarta(String[] d);
 	List<Carta> StrategyRareza(List<Carta> cartas);
 	List<Carta> StrategyNombre(List<Carta> cartas);
 	List<Carta> StrategyPoder(List<Carta> cartas);

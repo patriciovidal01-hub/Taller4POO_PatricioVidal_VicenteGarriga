@@ -11,10 +11,6 @@ public class Item extends Carta {
 		this.bonificacion = bonificacion;
 	}
 
-	public String toString() {
-		return "Item [bonificacion=" + bonificacion + "]";
-	}
-
 	public int getBonificacion() {
 		return bonificacion;
 	}

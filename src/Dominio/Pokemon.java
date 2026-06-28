@@ -13,11 +13,6 @@ public class Pokemon extends Carta {
 		this.cantEnergia = cantEnergia;
 	}
 
-	@Override
-	public String toString() {
-		return "Pokemon [daño=" + daño + ", cantEnergia=" + cantEnergia + "]";
-	}
-
 	public int getDaño() {
 		return daño;
 	}

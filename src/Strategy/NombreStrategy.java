@@ -16,7 +16,7 @@ public class NombreStrategy implements Strategy, Comparator<Carta> {
 
 	public int compare(Carta o1, Carta o2) {
 
-		return o1.getNombre().compareTo(o2.getNombre());
+		return o1.getNombre().compareToIgnoreCase(o2.getNombre());
 
 	}
 }

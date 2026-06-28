@@ -52,7 +52,6 @@ public class Escuchador extends MouseAdapter {
 			panel.add(new JLabel(String.valueOf(p.getDaño())));
 			panel.add(new JLabel("Cantidad Energias"));
 			panel.add(new JLabel(String.valueOf(p.getCantEnergia())));
-
 		} else if (cartas.get(fila) instanceof Item) {
 			Item i = (Item) cartas.get(fila);
 			panel.add(new JLabel("Bonificación"));

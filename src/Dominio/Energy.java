@@ -10,11 +10,6 @@ public class Energy extends Carta {
 		this.elemento = elemento;
 	}
 
-	@Override
-	public String toString() {
-		return "Energy [elemento=" + elemento + "]";
-	}
-
 	public String getElemento() {
 		return elemento;
 	}
