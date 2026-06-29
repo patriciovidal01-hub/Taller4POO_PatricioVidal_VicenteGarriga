@@ -3,6 +3,7 @@ package Logica;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -40,10 +41,19 @@ public class Escuchador extends MouseAdapter {
 		int fila = tabla.getSelectedRow();
 		JLabel marco = new JLabel();
 //		marco.setBounds(0, 0, 500, 698);
-
+		
+		File arch = new File("imagenes/" + cartas.get(fila).getNombre() + ".png");
+		
 		if (fila >= 0) {
+			if(arch.exists()) {
 			ImageIcon imagen = new ImageIcon("imagenes/" + cartas.get(fila).getNombre() + ".png");
 			marco.setIcon(imagen);
+			
+			} else {
+			ImageIcon predeterminado = new ImageIcon("imagenes/predeterminado.png");
+			marco.setIcon(predeterminado);
+			}
+			
 			panelImagen.add(marco);
 		}
 		panel.add(new JLabel("Nombre"));

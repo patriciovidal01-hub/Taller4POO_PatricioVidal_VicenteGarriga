@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,12 +18,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import Dominio.*;
 import Visitor.*;
 
 public class Ventana {
 
+	Sistema sistem = SistemaImp.getInstance();
 	public void crearVentana() {
 		JFrame ventana = new JFrame("TCG POKEMON O ALGO ASI");
 		JTabbedPane pestañas = new JTabbedPane();
@@ -50,7 +49,7 @@ public class Ventana {
 
 		// Tabla con información
 
-		List<Carta> cartas = SistemaImp.getInstance().getCartas();
+		List<Carta> cartas = sistem.getCartas();
 
 		String[] datos1 = { "Nombre", "Rareza", "Poder" };
 
@@ -96,12 +95,12 @@ public class Ventana {
 		PoderVisitor v = new PoderVisitor();
 
 		opcion.addActionListener(e -> {
-			List<Carta> cartas = SistemaImp.getInstance().getCartas();
+			List<Carta> cartas = sistem.getCartas();
 			switch (opcion.getSelectedIndex()) {
 
 			case (0):
 				tabla.setRowCount(0);
-				List<Carta> cartas2 = SistemaImp.getInstance().StrategyRareza(cartas);
+				List<Carta> cartas2 = sistem.StrategyRareza(cartas);
 				for (int i = 0; i < cartas2.size(); i++) {
 					Carta c = cartas2.get(i);
 					int poder = c.accept(v);
@@ -113,7 +112,7 @@ public class Ventana {
 
 			case (1):
 				tabla.setRowCount(0);
-				List<Carta> cartas3 = SistemaImp.getInstance().StrategyNombre(cartas);
+				List<Carta> cartas3 = sistem.StrategyNombre(cartas);
 				for (int i = 0; i < cartas3.size(); i++) {
 					Carta c = cartas3.get(i);
 					int poder = c.accept(v);
@@ -125,7 +124,7 @@ public class Ventana {
 
 			case (2):
 				tabla.setRowCount(0);
-				List<Carta> cartas4 = SistemaImp.getInstance().StrategyPoder(cartas);
+				List<Carta> cartas4 = sistem.StrategyPoder(cartas);
 				for (int i = 0; i < cartas4.size(); i++) {
 					Carta c = cartas4.get(i);
 					int poder = c.accept(v);
@@ -236,7 +235,8 @@ public class Ventana {
 						datos[3] = daño2.getText();
 						datos[4] = cantidadE2.getText();
 
-						SistemaImp.getInstance().crearCarta(datos);
+						sistem.crearCarta(datos);
+						sistem.reescribirArchivo();
 						reiniciarTabla(tabla, s);
 						ventana2.dispose();	
 					} catch (NumberFormatException ex) {
@@ -253,7 +253,8 @@ public class Ventana {
 						datos[2] = "Item";
 						datos[3] = bonificacion2.getText();
 
-						SistemaImp.getInstance().crearCarta(datos);
+						sistem.crearCarta(datos);
+						sistem.reescribirArchivo();
 						reiniciarTabla(tabla, s);
 						ventana2.dispose();	
 					} catch (NumberFormatException ex) {
@@ -270,7 +271,8 @@ public class Ventana {
 						datos[2] = "Supporter";
 						datos[3] = efectoT2.getText();
 
-						SistemaImp.getInstance().crearCarta(datos);
+						sistem.crearCarta(datos);
+						sistem.reescribirArchivo();
 						reiniciarTabla(tabla, s);
 						ventana2.dispose();	
 					} catch (NumberFormatException ex) {
@@ -288,7 +290,8 @@ public class Ventana {
 						datos[2] = "Energy";
 						datos[3] = elemento2.getText();
 
-						SistemaImp.getInstance().crearCarta(datos);
+						sistem.crearCarta(datos);
+						sistem.reescribirArchivo();
 						reiniciarTabla(tabla, s);
 						ventana2.dispose();	
 						
@@ -319,10 +322,10 @@ public class Ventana {
 	}
 	
 	public void reiniciarTabla(DefaultTableModel tabla, Escuchador s) {
-		List<Carta> cartas = SistemaImp.getInstance().getCartas();
+		List<Carta> cartas = sistem.getCartas();
 		PoderVisitor v = new PoderVisitor();
 		tabla.setRowCount(0);
-		List<Carta> cartas2 = SistemaImp.getInstance().StrategyRareza(cartas);
+		List<Carta> cartas2 = sistem.StrategyRareza(cartas);
 		for (int i = 0; i < cartas2.size(); i++) {
 			Carta c = cartas2.get(i);
 			int poder = c.accept(v);
@@ -337,7 +340,7 @@ public class Ventana {
 		PoderVisitor v = new PoderVisitor();
 		
 		b.addActionListener(e -> {
-			List<Carta> cartas = SistemaImp.getInstance().getCartas();
+			List<Carta> cartas = sistem.getCartas();
 			
 			String[] datos1 = { "Nombre", "Rareza", "Poder" };
 			DefaultTableModel tabla2 = new DefaultTableModel(datos1, 0);
@@ -365,7 +368,8 @@ public class Ventana {
 				int fila = tablaDatos.getSelectedRow();
 				if(fila >= 0) {
 					Carta carta = cartas.get(fila);
-					SistemaImp.getInstance().eliminarCarta(carta);
+					sistem.eliminarCarta(carta);
+					sistem.reescribirArchivo();
 					reiniciarTabla(tabla, s);
 					ventana2.dispose();
 				}
@@ -388,7 +392,7 @@ public class Ventana {
 		PoderVisitor v = new PoderVisitor();
 		
 		b.addActionListener(e -> {
-			List<Carta> cartas = SistemaImp.getInstance().getCartas();
+			List<Carta> cartas = sistem.getCartas();
 			
 			String[] datos1 = { "Nombre", "Rareza", "Poder" };
 			DefaultTableModel tabla2 = new DefaultTableModel(datos1, 0);
@@ -483,6 +487,7 @@ public class Ventana {
 				try {
 					cartaP.setDaño(Integer.parseInt(daño2.getText()));
 					cartaP.setCantEnergia(Integer.parseInt(cantidadE2.getText()));
+					sistem.reescribirArchivo();
 					ventana2.dispose();	
 					
 				} catch (NumberFormatException ex) {
@@ -498,6 +503,7 @@ public class Ventana {
 				
 				try {
 					cartaI.setBonificacion(Integer.parseInt(bonificacion2.getText()));
+					sistem.reescribirArchivo();
 					ventana2.dispose();	
 					
 				} catch (NumberFormatException ex) {
@@ -512,6 +518,7 @@ public class Ventana {
 				
 				try {
 					cartaS.setEfectoTurno(Integer.parseInt(efectoT2.getText()));
+					sistem.reescribirArchivo();
 					ventana2.dispose();	
 					
 				} catch (NumberFormatException ex) {
@@ -524,6 +531,9 @@ public class Ventana {
 				case("Energy"):
 					Energy cartaE = (Energy) carta;
 					cartaE.setElemento(elemento2.getText());
+					sistem.reescribirArchivo();
+					ventana2.dispose();
+					
 					break;
 				
 				}

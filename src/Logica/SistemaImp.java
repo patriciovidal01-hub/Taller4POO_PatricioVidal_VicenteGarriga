@@ -1,14 +1,17 @@
 package Logica;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import Dominio.*;
+import Factory.*;
+import Strategy.*;
 
-import Dominio.Carta;
-import Factory.CartaFactory;
-import Strategy.Contexto;
-import Strategy.NombreStrategy;
-import Strategy.PoderStrategy;
-import Strategy.RarezaStrategy;
 
 public class SistemaImp implements Sistema{
 
@@ -45,7 +48,43 @@ public class SistemaImp implements Sistema{
 		cartas.remove(c);
 	}
 	
-	
+	public void reescribirArchivo() {
+		
+		File arch = new File("Sobres.txt");
+		
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(arch));) {
+			
+			for(Carta c: cartas) {
+				switch(c.getTipo()) {
+				
+				case("Pokemon"):
+					Pokemon c1 = (Pokemon) c;
+					bw.write(c1.getNombre() + ";" + c1.getRareza() + ";" + c1.getTipo() + ";" + c1.getDaño() + ";" + c1.getCantEnergia());
+					break;
+				
+				case("Item"):
+					Item c2 = (Item) c;
+					bw.write(c2.getNombre() + ";" + c2.getRareza() + ";" + c2.getTipo() + ";" + c2.getBonificacion());
+					break;
+				
+				case("Supporter"):
+					Supporter c3 = (Supporter) c;
+					bw.write(c3.getNombre() + ";" + c3.getRareza() + ";" + c3.getTipo() + ";" + c3.getEfectoTurno());
+					break;
+				
+				case("Energy"):
+					Energy c4 = (Energy) c;
+					bw.write(c4.getNombre() + ";" + c4.getRareza() + ";" + c4.getTipo() + ";" + c4.getElemento());
+					
+					break;
+				}
+				bw.newLine();
+			}
+		} catch(Exception e) {
+			System.out.println("Archivo no encontrado");
+		}
+	}
+
 	public List<Carta> getCartas() {
 		List<Carta> copia = new ArrayList<>(cartas);
 		return copia;
