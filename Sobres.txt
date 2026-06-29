@@ -1,6 +1,6 @@
 Mega Charizard-Ex;5;Pokemon;360;2
 Pikachu;1;Pokemon;60;1
-Greninja-Ex;4;Pokemon;300;2
+Greninja-Ex;4;Pokemon;100;1
 Snorlax;2;Pokemon;120;3
 Gardevoir-Ex;4;Pokemon;310;3
 Bulbasaur;1;Pokemon;50;1

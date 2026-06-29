@@ -485,10 +485,15 @@ public class Ventana {
 					Pokemon cartaP = (Pokemon) carta;
 					
 				try {
-					cartaP.setDaño(Integer.parseInt(daño2.getText()));
-					cartaP.setCantEnergia(Integer.parseInt(cantidadE2.getText()));
-					sistem.reescribirArchivo();
-					ventana2.dispose();	
+					if(Integer.parseInt(cantidadE2.getText()) != 0) {
+						cartaP.setDaño(Integer.parseInt(daño2.getText()));
+						cartaP.setCantEnergia(Integer.parseInt(cantidadE2.getText()));
+						sistem.reescribirArchivo();
+						ventana2.dispose();	
+					} else {
+						JOptionPane.showMessageDialog(ventana,"Cantidad energias no puede ser 0","Error de Entrada", JOptionPane.ERROR_MESSAGE);
+					}
+					
 					
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(ventana,
