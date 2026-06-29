@@ -2,6 +2,7 @@ package Logica;
 
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -12,7 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
-import Dominio.*;
+import Dominio.Carta;
+import Dominio.Energy;
+import Dominio.Item;
+import Dominio.Pokemon;
+import Dominio.Supporter;
 
 public class Escuchador extends MouseAdapter {
 
@@ -26,7 +31,7 @@ public class Escuchador extends MouseAdapter {
 		this.ventana = ventana;
 	}
 
-	public void mouseClicked(java.awt.event.MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {
 		JDialog ventana = new JDialog(this.ventana, "Carta", true);
 		ventana.setLayout(new BorderLayout());
 		JPanel panelImagen = new JPanel();

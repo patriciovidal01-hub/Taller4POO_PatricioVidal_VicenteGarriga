@@ -5,10 +5,12 @@ public abstract class Carta implements Visitable {
 
 	String nombre;
 	int rareza;
+	String tipo;
 
-	public Carta(String nombre, int rareza) {
+	public Carta(String nombre, int rareza, String tipo) {
 		this.nombre = nombre;
 		this.rareza = rareza;
+		this.tipo = tipo;
 	}
 
 	public String getNombre() {
@@ -18,6 +20,11 @@ public abstract class Carta implements Visitable {
 	public int getRareza() {
 		return rareza;
 	}
+
+	public String getTipo() {
+		return tipo;
+	}
+	
 	
 	
 	

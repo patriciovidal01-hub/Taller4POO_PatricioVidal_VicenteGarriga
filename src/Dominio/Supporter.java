@@ -6,8 +6,8 @@ public class Supporter extends Carta {
 	
 	int efectoTurno;
 
-	public Supporter(String nombre, int rareza, int efectoTurno) {
-		super(nombre, rareza);
+	public Supporter(String nombre, int rareza, String tipo, int efectoTurno) {
+		super(nombre, rareza, tipo);
 		this.efectoTurno = efectoTurno;
 	}
 
@@ -18,7 +18,12 @@ public class Supporter extends Carta {
 	public int getEfectoTurno() {
 		return efectoTurno;
 	}
+	
+	
 
+	public void setEfectoTurno(int efectoTurno) {
+		this.efectoTurno = efectoTurno;
+	}
 
 	public int accept(Visitor v) {
 		return v.visit(this);

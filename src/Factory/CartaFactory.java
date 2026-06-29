@@ -8,13 +8,13 @@ public class CartaFactory {
 		switch(d[2]) {
 		
 		case("Pokemon"):
-			return new Pokemon(d[0], Integer.parseInt(d[1]), Integer.parseInt(d[3]), Integer.parseInt(d[4]));
+			return new Pokemon(d[0], Integer.parseInt(d[1]), d[2], Integer.parseInt(d[3]), Integer.parseInt(d[4]));
 		case("Item"):
-			return new Item(d[0], Integer.parseInt(d[1]), Integer.parseInt(d[3]));
+			return new Item(d[0], Integer.parseInt(d[1]), d[2], Integer.parseInt(d[3]));
 		case("Supporter"):
-			return new Supporter(d[0], Integer.parseInt(d[1]), Integer.parseInt(d[3]));
+			return new Supporter(d[0], Integer.parseInt(d[1]), d[2], Integer.parseInt(d[3]));
 		case("Energy"):
-			return new Energy(d[0], Integer.parseInt(d[1]), d[3]);
+			return new Energy(d[0], Integer.parseInt(d[1]), d[2] , d[3]);
 		default:
 			return null;
 		}
