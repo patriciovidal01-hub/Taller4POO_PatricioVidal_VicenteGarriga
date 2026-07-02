@@ -1,1 +1,0 @@
-memberSearchIndex = [{"p":"Strategy","c":"Contexto","l":"Contexto()","u":"%3Cinit%3E()","k":"3"},{"p":"Strategy","c":"Contexto","l":"ordenar(List)","u":"ordenar(java.util.List)"},{"p":"Strategy","c":"Contexto","l":"setStrategy(Strategy)","u":"setStrategy(Strategy.Strategy)"}];updateSearchResults();
