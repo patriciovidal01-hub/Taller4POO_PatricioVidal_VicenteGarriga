@@ -1,8 +1,19 @@
 package Factory;
 import Dominio.*;
 
+/**
+ * Clase encargada de la creación de los diferentes tipos de cartas.
+ * 
+ * @author Patricio Vidal
+ * @author Vicente Garriga
+ */
 public class CartaFactory {
 	
+	/**
+	 * Metódo encargado de la creación de cartas a partir de su tipo.
+	 * @param d Arreglo de cadenas de texto que contienen los atributos de la carta.
+	 * @return una carta inicializada con los atributos de las cadenas de texto. 
+	 */
 	public static Carta crearCarta(String[] d) {
 		
 		switch(d[2]) {

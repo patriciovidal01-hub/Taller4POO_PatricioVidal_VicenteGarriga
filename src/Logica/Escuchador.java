@@ -14,37 +14,59 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
-import Dominio.Carta;
-import Dominio.Energy;
-import Dominio.Item;
-import Dominio.Pokemon;
-import Dominio.Supporter;
-
+import Dominio.*;
+/**
+ * Clase encargada de escuchar el mouse del Usuario y ejecutar ciertas acciones.
+ * 
+ * @author Patricio Vidal
+ * @author Vicente Garriga
+ */
 public class Escuchador extends MouseAdapter {
-
-	JTable tabla;
-	List<Carta> cartas;
-	JFrame ventana;
-
+	
+	/**
+	 * Tabla.
+	 */
+	private JTable tabla;
+	
+	/**
+	 * Lista de cartas.
+	 */
+	private List<Carta> cartas;
+	
+	/**
+	 * Ventana principal que se utiliza.
+	 */
+	private JFrame ventana;
+	
+	
+	/**
+	 * Inicializa el Escuchador con sus atributos respectivos.
+	 * @param tabla Tabla donde se escucha el mouse.
+	 * @param cartas Lista de cartas relacionada a la tabla.
+	 * @param ventana Ventana principal que se ocupa.
+	 */
 	public Escuchador(JTable tabla, List<Carta> cartas, JFrame ventana) {
 		this.tabla = tabla;
 		this.cartas = cartas;
 		this.ventana = ventana;
 	}
-
+	
+	
+	/**
+	 * Crea una ventana adicional que muestra información relacionada y un png de la carta clickeada en la tabla .	
+	 * @param e Un evento de la tabla.
+	 */
 	public void mouseClicked(MouseEvent e) {
-		JDialog ventana = new JDialog(this.ventana, "Carta", true);
-		ventana.setLayout(new BorderLayout());
+		JDialog dialog = new JDialog(this.ventana, "Carta", true);
+		dialog.setLayout(new BorderLayout());
 		JPanel panelImagen = new JPanel();
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		int fila = tabla.getSelectedRow();
 		JLabel marco = new JLabel();
-//		marco.setBounds(0, 0, 500, 698);
-		
-		File arch = new File("imagenes/" + cartas.get(fila).getNombre() + ".png");
-		
+			
 		if (fila >= 0) {
+			File arch = new File("imagenes/" + cartas.get(fila).getNombre() + ".png");
 			if(arch.exists()) {
 			ImageIcon imagen = new ImageIcon("imagenes/" + cartas.get(fila).getNombre() + ".png");
 			marco.setIcon(imagen);
@@ -55,6 +77,8 @@ public class Escuchador extends MouseAdapter {
 			}
 			
 			panelImagen.add(marco);
+		} else {
+			return ;
 		}
 		panel.add(new JLabel("Nombre"));
 		panel.add(new JLabel(cartas.get(fila).getNombre()));
@@ -81,15 +105,20 @@ public class Escuchador extends MouseAdapter {
 			panel.add(new JLabel(en.getElemento()));
 		}
 
-		ventana.add(panelImagen, BorderLayout.WEST);
-		ventana.add(panel, BorderLayout.CENTER);
-		ventana.setSize(1200, 1040);
-		ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		ventana.setLocationRelativeTo(this.ventana);
-		ventana.setVisible(true);
+		dialog.add(panelImagen, BorderLayout.WEST);
+		dialog.add(panel, BorderLayout.CENTER);
+		dialog.setSize(1200, 1040);
+		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		dialog.setLocationRelativeTo(this.ventana);
+		dialog.setVisible(true);
 
 	}
-
+	
+	/**
+	 * Modifica la lista de cartas actual de la carta por una nueva lista de cartas.
+	 * 
+	 * @param cartas Nueva lista de cartas.
+	 */
 	public void setCartas(List<Carta> cartas) {
 		this.cartas = cartas;
 	}
