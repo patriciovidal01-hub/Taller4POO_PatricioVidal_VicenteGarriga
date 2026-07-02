@@ -23,7 +23,7 @@ Professor's Research;4;Supporter;5
 Cynthia's Ambition;5;Supporter;6
 Boss's Orders;3;Supporter;4
 Hop;1;Supporter;2
-Basic Energy;1;Energy;Fight
+Basic Energy;1;Energy;Basic
 Fire Energy;1;Energy;Fire
 Water Energy;1;Energy;Water
 Lightning Energy;1;Energy;Lightning
