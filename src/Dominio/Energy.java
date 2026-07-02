@@ -3,7 +3,7 @@ package Dominio;
 import Visitor.*;
 
 /**
- * Tipo de carta que representa la energia que requieren los pokemons para
+ * Tipo de carta que representa la energía que requieren los pokemons para
  * luchar.
  * 
  * @author Patricio Vidal
@@ -12,7 +12,7 @@ import Visitor.*;
 public class Energy extends Carta {
 
 	/**
-	 * Elemento de la energia.
+	 * Elemento de la energía.
 	 */
 	private String elemento;
 
@@ -48,8 +48,8 @@ public class Energy extends Carta {
 	}
 
 	/**
-	 * Metodo que pide un Visitor encargado de calcular el poder de la carta
-	 * mediante el metodo visit cuyo parametro es la misma carta.
+	 * Método que pide un Visitor encargado de calcular el poder de la carta
+	 * mediante el método visit cuyo parámetro es la misma carta.
 	 * 
 	 * @param v un visitor encargado de calcular el poder de la carta.
 	 * @return un entero que representa el poder de la carta.

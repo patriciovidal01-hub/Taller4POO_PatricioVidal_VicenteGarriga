@@ -51,8 +51,8 @@ public class Supporter extends Carta {
 	}
 
 	/**
-	 * Metodo que pide un Visitor encargado de calcular el poder de la carta
-	 * mediante el metodo visit cuyo parametro es la misma carta.
+	 * Método que pide un Visitor encargado de calcular el poder de la carta
+	 * mediante el método visit cuyo parámetro es la misma carta.
 	 * 
 	 * @param v un visitor encargado de calcular el poder de la carta.
 	 * @return un entero que representa el poder de la carta.

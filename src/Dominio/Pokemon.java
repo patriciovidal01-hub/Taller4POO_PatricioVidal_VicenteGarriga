@@ -15,19 +15,19 @@ public class Pokemon extends Carta {
 	 */
 	private int daño;
 	/**
-	 * Cantidad de energias que requiere el pokemon para infligir daño.
+	 * Cantidad de energías que requiere el pokemon para infligir daño.
 	 */
 	private int cantEnergia;
 
 	/**
-	 * Inicializa la carta Pokemon con su respectivo daño y cantidad de energias que
+	 * Inicializa la carta Pokemon con su respectivo daño y cantidad de energías que
 	 * necesita.
 	 * 
 	 * @param nombre      Nombre de la carta.
 	 * @param rareza      Rareza de la carta.
 	 * @param tipo        Tipo de la carta.
 	 * @param daño        Daño que inflige el pokemon.
-	 * @param cantEnergia Cantidad de energias que necesita para infligir daño.
+	 * @param cantEnergia Cantidad de energías que necesita para infligir daño.
 	 */
 	public Pokemon(String nombre, int rareza, String tipo, int daño, int cantEnergia) {
 		super(nombre, rareza, tipo);
@@ -54,28 +54,28 @@ public class Pokemon extends Carta {
 	}
 
 	/**
-	 * Devuelve un entero que representa la cantidad de energias que necesita la
+	 * Devuelve un entero que representa la cantidad de energías que necesita la
 	 * carta.
 	 * 
-	 * @return entero de la cantidad de energias.
+	 * @return entero de la cantidad de energías.
 	 */
 	public int getCantEnergia() {
 		return cantEnergia;
 	}
 
 	/**
-	 * Modifica la cantidad de energias actual de la carta por una cantidad de
-	 * energia.
+	 * Modifica la cantidad de energías actual de la carta por una cantidad de
+	 * energía.
 	 * 
-	 * @param cantEnergia Nueva cantidad de energias.
+	 * @param cantEnergia Nueva cantidad de energías.
 	 */
 	public void setCantEnergia(int cantEnergia) {
 		this.cantEnergia = cantEnergia;
 	}
 
 	/**
-	 * Metodo que pide un Visitor encargado de calcular el poder de la carta
-	 * mediante el metodo visit cuyo parametro es la misma carta.
+	 * Método que pide un Visitor encargado de calcular el poder de la carta
+	 * mediante el método visit cuyo parámetro es la misma carta.
 	 * 
 	 * @param v un visitor encargado de calcular el poder de la carta.
 	 * @return un entero que representa el poder de la carta.

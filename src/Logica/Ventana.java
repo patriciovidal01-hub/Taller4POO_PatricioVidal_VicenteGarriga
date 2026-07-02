@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -18,12 +19,30 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import Dominio.*;
-import Visitor.*;
 
+import Dominio.Carta;
+import Dominio.Energy;
+import Dominio.Item;
+import Dominio.Pokemon;
+import Dominio.Supporter;
+import Visitor.PoderVisitor;
+
+/**
+ * Clase encargada de la creación de la GUI y sus componentes.
+ * 
+ * @author Patricio Vidal
+ * @author Vicente Garriga
+ */
 public class Ventana {
 
-	Sistema sistem = SistemaImp.getInstance();
+	/**
+	 * Atributo de Sistema.
+	 */
+	private Sistema sistem = SistemaImp.getInstance();
+
+	/**
+	 * Creación de la ventana principal y sus componentes.
+	 */
 	public void crearVentana() {
 		JFrame ventana = new JFrame("TCG POKEMON O ALGO ASI");
 		JTabbedPane pestañas = new JTabbedPane();
@@ -56,7 +75,7 @@ public class Ventana {
 		DefaultTableModel tabla = new DefaultTableModel(datos1, 0);
 		JTable tablaDatos = new JTable(tabla);
 		PoderVisitor v = new PoderVisitor();
-		
+
 		for (int i = 0; i < cartas.size(); i++) {
 			Carta c = cartas.get(i);
 			int poder = c.accept(v);
@@ -73,13 +92,13 @@ public class Ventana {
 		eventoAgregar(agregar, ventana, tabla, s);
 		eventoEliminar(eliminar, ventana, tabla, s);
 		eventoModificar(modificar, ventana, tabla, s);
-		
+
 		ordenar.add(scroll, BorderLayout.CENTER);
 
 		// Pestañas
 
 		pestañas.addTab("Administración", admin);
-		pestañas.addTab("Ver coleción", ordenar);
+		pestañas.addTab("Ver colección", ordenar);
 
 		// Características de la ventana
 		ventana.setContentPane(pestañas);
@@ -90,8 +109,16 @@ public class Ventana {
 
 	}
 
+	/**
+	 * Método que escucha la opción seleccionada y cambia la tabla acorde.
+	 * 
+	 * @param opcion JComboBox que contiene las opciones disponibles de
+	 *               ordenamiento.
+	 * @param tabla  Plantilla de tabla para modificación.
+	 * @param s      Escuchador atento al mouse del usuario.
+	 */
 	public void escucharOpcion(JComboBox<String> opcion, DefaultTableModel tabla, Escuchador s) {
-		
+
 		PoderVisitor v = new PoderVisitor();
 
 		opcion.addActionListener(e -> {
@@ -100,7 +127,7 @@ public class Ventana {
 
 			case (0):
 				tabla.setRowCount(0);
-				List<Carta> cartas2 = sistem.StrategyRareza(cartas);
+				List<Carta> cartas2 = sistem.strategyRareza(cartas);
 				for (int i = 0; i < cartas2.size(); i++) {
 					Carta c = cartas2.get(i);
 					int poder = c.accept(v);
@@ -112,7 +139,7 @@ public class Ventana {
 
 			case (1):
 				tabla.setRowCount(0);
-				List<Carta> cartas3 = sistem.StrategyNombre(cartas);
+				List<Carta> cartas3 = sistem.strategyNombre(cartas);
 				for (int i = 0; i < cartas3.size(); i++) {
 					Carta c = cartas3.get(i);
 					int poder = c.accept(v);
@@ -124,7 +151,7 @@ public class Ventana {
 
 			case (2):
 				tabla.setRowCount(0);
-				List<Carta> cartas4 = sistem.StrategyPoder(cartas);
+				List<Carta> cartas4 = sistem.strategyPoder(cartas);
 				for (int i = 0; i < cartas4.size(); i++) {
 					Carta c = cartas4.get(i);
 					int poder = c.accept(v);
@@ -138,13 +165,22 @@ public class Ventana {
 		});
 	}
 
-	public void eventoAgregar(JButton b, JFrame ventana, DefaultTableModel tabla, Escuchador s ) {
+	/**
+	 * Método que crea una ventana extra que permite agregar un tipo de carta
+	 * cualquiera.
+	 * 
+	 * @param b       Botón de agregar.
+	 * @param ventana Ventana principal que se ocupa.
+	 * @param tabla   Plantilla de tabla para modificación.
+	 * @param s       Escuchador atento al mouse del usuario.
+	 */
+	public void eventoAgregar(JButton b, JFrame ventana, DefaultTableModel tabla, Escuchador s) {
 		b.addActionListener(e -> {
 			JDialog ventana2 = new JDialog(ventana, "Agregar Carta", true);
 			JPanel panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-			JLabel pregunta = new JLabel("¿De que tipo quieres que sea tú carta?");
+			JLabel pregunta = new JLabel("¿De qué tipo quieres que sea tu carta?");
 			String[] opcions = { "Pokemon", "Item", "Supporter", "Energy" };
 			JComboBox<String> opciones = new JComboBox<>(opcions);
 			opciones.setMaximumSize(opciones.getPreferredSize());
@@ -170,10 +206,10 @@ public class Ventana {
 			JLabel daño = new JLabel("Daño");
 			JTextField daño2 = new JTextField(15);
 
-			JLabel cantidadE = new JLabel("Cantidad de energias");
+			JLabel cantidadE = new JLabel("Cantidad de energías");
 			JTextField cantidadE2 = new JTextField(15);
 
-			JLabel bonificacion = new JLabel("Bonificacion");
+			JLabel bonificacion = new JLabel("Bonificación");
 			JTextField bonificacion2 = new JTextField(15);
 
 			JLabel efectoT = new JLabel("Efecto por turno");
@@ -238,7 +274,7 @@ public class Ventana {
 						sistem.crearCarta(datos);
 						sistem.reescribirArchivo();
 						reiniciarTabla(tabla, s);
-						ventana2.dispose();	
+						ventana2.dispose();
 					} catch (NumberFormatException ex) {
 						JOptionPane.showMessageDialog(ventana,
 								"Por favor, ingrese valores numéricos válidos en los campos correspondientes.",
@@ -256,7 +292,7 @@ public class Ventana {
 						sistem.crearCarta(datos);
 						sistem.reescribirArchivo();
 						reiniciarTabla(tabla, s);
-						ventana2.dispose();	
+						ventana2.dispose();
 					} catch (NumberFormatException ex) {
 						JOptionPane.showMessageDialog(ventana,
 								"Por favor, ingrese valores numéricos válidos en los campos correspondientes.",
@@ -274,7 +310,7 @@ public class Ventana {
 						sistem.crearCarta(datos);
 						sistem.reescribirArchivo();
 						reiniciarTabla(tabla, s);
-						ventana2.dispose();	
+						ventana2.dispose();
 					} catch (NumberFormatException ex) {
 						JOptionPane.showMessageDialog(ventana,
 								"Por favor, ingrese valores numéricos válidos en los campos correspondientes.",
@@ -284,7 +320,7 @@ public class Ventana {
 					break;
 
 				case (3):
-					
+
 					try {
 						datos[1] = rareza2.getText();
 						datos[2] = "Energy";
@@ -293,15 +329,14 @@ public class Ventana {
 						sistem.crearCarta(datos);
 						sistem.reescribirArchivo();
 						reiniciarTabla(tabla, s);
-						ventana2.dispose();	
-						
+						ventana2.dispose();
+
 					} catch (NumberFormatException ex) {
 						JOptionPane.showMessageDialog(ventana,
 								"Por favor, ingrese valores numéricos válidos en los campos correspondientes.",
 								"Error de Entrada", JOptionPane.ERROR_MESSAGE);
 					}
 
-					
 					break;
 				}
 
@@ -320,12 +355,18 @@ public class Ventana {
 			ventana2.setVisible(true);
 		});
 	}
-	
+
+	/**
+	 * Método que reinicia la tabla a su posición original.
+	 * 
+	 * @param tabla Plantilla de tabla para modificación.
+	 * @param s     Escuchador atento al mouse del usuario.
+	 */
 	public void reiniciarTabla(DefaultTableModel tabla, Escuchador s) {
 		List<Carta> cartas = sistem.getCartas();
 		PoderVisitor v = new PoderVisitor();
 		tabla.setRowCount(0);
-		List<Carta> cartas2 = sistem.StrategyRareza(cartas);
+		List<Carta> cartas2 = sistem.strategyRareza(cartas);
 		for (int i = 0; i < cartas2.size(); i++) {
 			Carta c = cartas2.get(i);
 			int poder = c.accept(v);
@@ -334,21 +375,29 @@ public class Ventana {
 		}
 		s.setCartas(cartas2);
 	}
-	
+
+	/**
+	 * Método que crea una ventana extra que permite eliminar una carta existente.
+	 * 
+	 * @param b       Botón de eliminar.
+	 * @param ventana Ventana principal que se ocupa.
+	 * @param tabla   Plantilla de tabla para modificación.
+	 * @param s       Escuchador atento al mouse del usuario.
+	 */
 	public void eventoEliminar(JButton b, JFrame ventana, DefaultTableModel tabla, Escuchador s) {
-		
+
 		PoderVisitor v = new PoderVisitor();
-		
+
 		b.addActionListener(e -> {
 			List<Carta> cartas = sistem.getCartas();
-			
+
 			String[] datos1 = { "Nombre", "Rareza", "Poder" };
 			DefaultTableModel tabla2 = new DefaultTableModel(datos1, 0);
-			
+
 			JDialog ventana2 = new JDialog(ventana, "Eliminar Carta", true);
 			JPanel panel = new JPanel(new FlowLayout());
 			JTable tablaDatos = new JTable(tabla2);
-			
+
 			for (int i = 0; i < cartas.size(); i++) {
 				Carta c = cartas.get(i);
 				int poder = c.accept(v);
@@ -358,15 +407,13 @@ public class Ventana {
 
 			tablaDatos.setDefaultEditor(Object.class, null);
 			JScrollPane scroll = new JScrollPane(tablaDatos);
-			
+
 			JButton eliminar = new JButton("Eliminar Carta");
 			JLabel texto = new JLabel("Clickeé sobre la carta que quiera eliminar y pulse |Eliminar Carta|");
-			
-			
-			
-			eliminar.addActionListener(e2-> {
+
+			eliminar.addActionListener(e2 -> {
 				int fila = tablaDatos.getSelectedRow();
-				if(fila >= 0) {
+				if (fila >= 0) {
 					Carta carta = cartas.get(fila);
 					sistem.eliminarCarta(carta);
 					sistem.reescribirArchivo();
@@ -374,8 +421,7 @@ public class Ventana {
 					ventana2.dispose();
 				}
 			});
-			
-			
+
 			panel.add(scroll);
 			panel.add(eliminar);
 			panel.add(texto);
@@ -384,25 +430,33 @@ public class Ventana {
 			ventana2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			ventana2.setLocationRelativeTo(ventana);
 			ventana2.setVisible(true);
-			
+
 		});
 	}
 
+	/**
+	 * Método que crea una ventana extra que permite modificar una carta existente.
+	 * 
+	 * @param b       Botón de modificar.
+	 * @param ventana Ventana principal que se ocupa.
+	 * @param tabla   Plantilla de tabla para modificación.
+	 * @param s       Escuchador atento al mouse del usuario.
+	 */
 	public void eventoModificar(JButton b, JFrame ventana, DefaultTableModel tabla, Escuchador s) {
 		PoderVisitor v = new PoderVisitor();
-		
+
 		b.addActionListener(e -> {
 			List<Carta> cartas = sistem.getCartas();
-			
+
 			String[] datos1 = { "Nombre", "Rareza", "Poder" };
 			DefaultTableModel tabla2 = new DefaultTableModel(datos1, 0);
-			
+
 			JDialog ventana2 = new JDialog(ventana, "Modificar Carta", true);
 			JPanel principal = new JPanel(new BorderLayout());
 			JPanel panel = new JPanel(new FlowLayout());
 			JPanel panelCr = new JPanel(new FlowLayout());
 			JTable tablaDatos = new JTable(tabla2);
-			
+
 			for (int i = 0; i < cartas.size(); i++) {
 				Carta c = cartas.get(i);
 				int poder = c.accept(v);
@@ -412,16 +466,16 @@ public class Ventana {
 
 			tablaDatos.setDefaultEditor(Object.class, null);
 			JScrollPane scroll = new JScrollPane(tablaDatos);
-			
+
 			JLabel texto = new JLabel("Clickeé sobre la carta que quiera modificar");
-			
+
 			JLabel daño = new JLabel("Daño");
 			JTextField daño2 = new JTextField(15);
 
-			JLabel cantidadE = new JLabel("Cantidad de energias");
+			JLabel cantidadE = new JLabel("Cantidad de energías");
 			JTextField cantidadE2 = new JTextField(15);
 
-			JLabel bonificacion = new JLabel("Bonificacion");
+			JLabel bonificacion = new JLabel("Bonificación");
 			JTextField bonificacion2 = new JTextField(15);
 
 			JLabel efectoT = new JLabel("Efecto por turno");
@@ -429,122 +483,123 @@ public class Ventana {
 
 			JLabel elemento = new JLabel("Elemento");
 			JTextField elemento2 = new JTextField(15);
-			
+
 			JButton modificar = new JButton("Modificar");
-			
+
 			tablaDatos.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					int fila = tablaDatos.getSelectedRow();
-					if(fila >= 0) {
+					if (fila >= 0) {
 						panelCr.removeAll();
 						Carta carta = cartas.get(fila);
-						
-						switch(carta.getTipo()) {
-						
-						case("Pokemon"):
+
+						switch (carta.getTipo()) {
+
+						case ("Pokemon"):
 							panelCr.add(daño);
 							panelCr.add(daño2);
 							panelCr.add(cantidadE);
 							panelCr.add(cantidadE2);
 							break;
-						
-						case("Item"):
+
+						case ("Item"):
 							panelCr.add(bonificacion);
 							panelCr.add(bonificacion2);
 							break;
-						
-						case("Supporter"):
+
+						case ("Supporter"):
 							panelCr.add(efectoT);
 							panelCr.add(efectoT2);
 							break;
-						
-						case("Energy"):
+
+						case ("Energy"):
 							panelCr.add(elemento);
 							panelCr.add(elemento2);
 							break;
-						
+
 						}
-					
+
 						panelCr.add(modificar);
 						panelCr.revalidate();
 						panelCr.repaint();
 					}
-					
+
 				}
 			});
-			
-			
-			modificar.addActionListener(e3 ->{
+
+			modificar.addActionListener(e3 -> {
 				int fila = tablaDatos.getSelectedRow();
-				Carta carta = cartas.get(fila);
-				
-				switch(carta.getTipo()) {
-				
-				case("Pokemon"):
-					
-					Pokemon cartaP = (Pokemon) carta;
-					
-				try {
-					if(Integer.parseInt(cantidadE2.getText()) != 0) {
-						cartaP.setDaño(Integer.parseInt(daño2.getText()));
-						cartaP.setCantEnergia(Integer.parseInt(cantidadE2.getText()));
+				if (fila >= 0) {
+
+					Carta carta = cartas.get(fila);
+
+					switch (carta.getTipo()) {
+
+					case ("Pokemon"):
+
+						Pokemon cartaP = (Pokemon) carta;
+
+						try {
+							if (Integer.parseInt(cantidadE2.getText()) != 0) {
+								cartaP.setDaño(Integer.parseInt(daño2.getText()));
+								cartaP.setCantEnergia(Integer.parseInt(cantidadE2.getText()));
+								sistem.reescribirArchivo();
+								ventana2.dispose();
+							} else {
+								JOptionPane.showMessageDialog(ventana, "Cantidad energías no puede ser 0",
+										"Error de Entrada", JOptionPane.ERROR_MESSAGE);
+							}
+
+						} catch (NumberFormatException ex) {
+							JOptionPane.showMessageDialog(ventana,
+									"Por favor, ingrese valores numéricos válidos en los campos correspondientes.",
+									"Error de Entrada", JOptionPane.ERROR_MESSAGE);
+						}
+
+						break;
+
+					case ("Item"):
+						Item cartaI = (Item) carta;
+
+						try {
+							cartaI.setBonificacion(Integer.parseInt(bonificacion2.getText()));
+							sistem.reescribirArchivo();
+							ventana2.dispose();
+
+						} catch (NumberFormatException ex) {
+							JOptionPane.showMessageDialog(ventana,
+									"Por favor, ingrese valores numéricos válidos en los campos correspondientes.",
+									"Error de Entrada", JOptionPane.ERROR_MESSAGE);
+						}
+						break;
+
+					case ("Supporter"):
+						Supporter cartaS = (Supporter) carta;
+
+						try {
+							cartaS.setEfectoTurno(Integer.parseInt(efectoT2.getText()));
+							sistem.reescribirArchivo();
+							ventana2.dispose();
+
+						} catch (NumberFormatException ex) {
+							JOptionPane.showMessageDialog(ventana,
+									"Por favor, ingrese valores numéricos válidos en los campos correspondientes.",
+									"Error de Entrada", JOptionPane.ERROR_MESSAGE);
+						}
+						break;
+
+					case ("Energy"):
+						Energy cartaE = (Energy) carta;
+						cartaE.setElemento(elemento2.getText());
 						sistem.reescribirArchivo();
-						ventana2.dispose();	
-					} else {
-						JOptionPane.showMessageDialog(ventana,"Cantidad energias no puede ser 0","Error de Entrada", JOptionPane.ERROR_MESSAGE);
+						ventana2.dispose();
+
+						break;
+
 					}
-					
-					
-				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(ventana,
-							"Por favor, ingrese valores numéricos válidos en los campos correspondientes.",
-							"Error de Entrada", JOptionPane.ERROR_MESSAGE);
-				}
-				
-					break;
-				
-				case("Item"):
-					Item cartaI = (Item) carta;
-				
-				try {
-					cartaI.setBonificacion(Integer.parseInt(bonificacion2.getText()));
-					sistem.reescribirArchivo();
-					ventana2.dispose();	
-					
-				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(ventana,
-							"Por favor, ingrese valores numéricos válidos en los campos correspondientes.",
-							"Error de Entrada", JOptionPane.ERROR_MESSAGE);
-				}
-					break;
-				
-				case("Supporter"):
-					Supporter cartaS = (Supporter) carta;
-				
-				try {
-					cartaS.setEfectoTurno(Integer.parseInt(efectoT2.getText()));
-					sistem.reescribirArchivo();
-					ventana2.dispose();	
-					
-				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(ventana,
-							"Por favor, ingrese valores numéricos válidos en los campos correspondientes.",
-							"Error de Entrada", JOptionPane.ERROR_MESSAGE);
-				}
-					break;
-				
-				case("Energy"):
-					Energy cartaE = (Energy) carta;
-					cartaE.setElemento(elemento2.getText());
-					sistem.reescribirArchivo();
-					ventana2.dispose();
-					
-					break;
-				
 				}
 			});
-			
-			
+
 			panel.add(scroll);
 			panel.add(texto);
 			principal.add(panel, BorderLayout.CENTER);
@@ -554,7 +609,7 @@ public class Ventana {
 			ventana2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			ventana2.setLocationRelativeTo(ventana);
 			ventana2.setVisible(true);
-			
+
 		});
 	}
 

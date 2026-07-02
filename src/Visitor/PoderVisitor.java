@@ -16,7 +16,7 @@ public class PoderVisitor implements Visitor {
 	 * 
 	 * @param x un Pokemon cualquiera.
 	 * 
-	 * @return el poder calculado, 0 si la cantidad de energias es 0.
+	 * @return el poder calculado, 0 si la cantidad de energías es 0.
 	 */
 	public int visit(Pokemon x) {
 		if (x.getCantEnergia() == 0) {

@@ -11,16 +11,16 @@ import Visitor.*;
 public class Item extends Carta {
 
 	/**
-	 * Bonificacion que otorga la carta.
+	 * Bonificación que otorga la carta.
 	 */
 	private int bonificacion;
 
 	/**
-	 * Inicializa la carta Item con su respectiva bonificacion. 
+	 * Inicializa la carta Item con su respectiva bonificación. 
 	 * @param nombre       Nombre de la carta.
 	 * @param rareza       Rareza de la carta.
 	 * @param tipo         Tipo de la carta.
-	 * @param bonificacion Bonificacion asociada a la carta.
+	 * @param bonificacion Bonificación asociada a la carta.
 	 */
 	public Item(String nombre, int rareza, String tipo, int bonificacion) {
 		super(nombre, rareza, tipo);
@@ -28,7 +28,7 @@ public class Item extends Carta {
 	}
 
 	/**
-	 * Devuelve un entero que representa la bonificacion que otorga la carta.
+	 * Devuelve un entero que representa la bonificación que otorga la carta.
 	 * 
 	 * @return entero de la bonificacion de la carta.
 	 */
@@ -37,17 +37,17 @@ public class Item extends Carta {
 	}
 
 	/**
-	 * Modifica la bonificacion actual de la carta por una nueva bonificacion.
+	 * Modifica la bonificación actual de la carta por una nueva bonificación.
 	 * 
-	 * @param bonificacion Nueva bonificacion de la carta.
+	 * @param bonificacion Nueva bonificación de la carta.
 	 */
 	public void setBonificacion(int bonificacion) {
 		this.bonificacion = bonificacion;
 	}
 
 	/**
-	 * Metodo que pide un Visitor encargado de calcular el poder de la carta
-	 * mediante el metodo visit cuyo parametro es la misma carta.
+	 * Método que pide un Visitor encargado de calcular el poder de la carta
+	 * mediante el método visit cuyo parámetro es la misma carta.
 	 * 
 	 * @param v un visitor encargado de calcular el poder de la carta.
 	 * @return un entero que representa el poder de la carta.

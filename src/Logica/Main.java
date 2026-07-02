@@ -23,7 +23,7 @@ public class Main {
 	
 	/**
 	 * Método principal donde se leen los archivos y se crea la GUI.
-	 * @param args Arreglo de argumentos de la linea de comando.
+	 * @param args Arreglo de argumentos de la línea de comando.
 	 */
 	public static void main(String[] args) {
 		

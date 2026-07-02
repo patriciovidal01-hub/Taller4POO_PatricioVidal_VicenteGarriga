@@ -10,7 +10,12 @@ import Dominio.*;
 public class CartaFactory {
 	
 	/**
-	 * Metódo encargado de la creación de cartas a partir de su tipo.
+	 * Inicializa la clase CartaFactory con nada.
+	 */
+	private CartaFactory() {}
+	
+	/**
+	 * Método encargado de la creación de cartas a partir de su tipo.
 	 * @param d Arreglo de cadenas de texto que contienen los atributos de la carta.
 	 * @return una carta inicializada con los atributos de las cadenas de texto. 
 	 */

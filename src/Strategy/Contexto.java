@@ -29,7 +29,7 @@ public class Contexto {
 	}
 
 	/**
-	 * Método que llama al mtodo ordenar de la estrategia actual.
+	 * Método que llama al método ordenar de la estrategia actual.
 	 * 
 	 * @param cartas Lista de cartas.
 	 */

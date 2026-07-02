@@ -32,9 +32,9 @@ public class NombreStrategy implements Strategy, Comparator<Carta> {
 	 * 
 	 * @param o1 primera Carta a comparar.
 	 * @param o2 segunda Carta a comparar.
-	 * @return -1 si la primera carta es menor alfabeticamente a la segunda, 0 si la
-	 *         primera carta es igual a la segunda alfabeticamente y 1 si la primera
-	 *         carta es mayor alfabeticamente a la segunda.
+	 * @return -1 si la primera carta es menor alfabéticamente a la segunda, 0 si la
+	 *         primera carta es igual a la segunda alfabéticamente y 1 si la primera
+	 *         carta es mayor alfabéticamente a la segunda.
 	 */
 	public int compare(Carta o1, Carta o2) {
 
